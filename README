@@ -1,0 +1,64 @@
+Train2ME training specification syntax
+--------------------------------------
+
+Training specification files for Train2ME have the '.training' extension
+and must follow a strict syntax. The file is made up from lines of
+tab-separated fields. Empty lines are not ignored and there is no
+support for comments.
+
+The first line dictates the number of information regions used by the
+training. Information regions should be thought of as textboxes on the
+screen of the device. We will use NUM to indicate this number in this
+document.
+
+The next NUM lines specify the layout of the information regions. Each
+line must consist of the following 4 fields in the given order:
+ 1. The horizontal (x) coordinate of the region's anchor point
+ 2. The vertical (y) coordinate of the region's anchor point
+ 3. The height of the region
+ 4. The position of the anchor point relative to the region.
+    Possible values are:
+     -  TOPLEFT (the region is below and to the right of its anchor
+        point)
+     -  TOPCENTER (the region is centered below its anchor point)
+     -  TOPRIGHT (the region is below and to the left of its anchor
+        point)
+     -  CENTERLEFT (the region is centered to the right of its anchor
+        point)
+     -  CENTER (the region is centered around its anchor point)
+     -  CENTERRIGHT (the region is centered to the left of its anchor
+        point)
+     -  BOTTOMLEFT (the region is above and to the right of its anchor
+        point)
+     -  BOTTOMCENTER (the region is centered above its anchor point)
+     -  BOTTOMRIGHT (the region is above and to the left of its anchor
+        point)
+The contents of a region are scaled to match the region's height.
+
+After these lines the contents of the regions are specified. A training
+is divided into consecutive epochs. Each epoch is represented by NUM
+lines in the specification. The nth line of the NUM lines specifies the
+contents of the nth region during the specified epoch.
+
+The first field of every line of content specification contains the name
+of a content provider. The remaining fields are parameters of the
+content provider. Currently supported providers and there arguments
+are:
+ -  Distance [.][m* | km | NM] [<distance>]
+    A '.' in front of the unit prevents the unit from being shown.
+    If <distance> is left unspecified, the total distance is shown. If
+    <distance> is 0, the total distance is reset. For any other value of
+    <distance>, the distance is shown decreasing from the provided
+    value. Once the distance reaches zero, the training moves to the
+    next epoch.
+ -  Speed [.][m/s* | km/h | kt | min/km]
+    A '.' in front of the unit prevents the unit from being shown.
+ -  Text [<text>]
+    When no text is provided, the current time is shown.
+ -  Timer [.][s* | min | h] [<time>]
+    Similar to Distance.
+ -  Wait [<text>]
+    Similar to Text, but a Continue button is added to the interface,
+    which triggers the start of the next epoch.
+Default parameter values are marked with a *.
+
