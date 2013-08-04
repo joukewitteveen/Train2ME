@@ -9,10 +9,13 @@ import javax.microedition.lcdui.*;
 import javax.microedition.location.QualifiedCoordinates;
 
 import nl.joukewitteveen.util.*;
+import nl.joukewitteveen.trainer.Training;;
 
 public class GPX implements CommandListener {
 	private static boolean activeSegment = false;
+	private static boolean trkIsEmpty = true;
 	private static Calendar calendar = Calendar.getInstance();
+	private static FileConnection file;
 	private static PrintStream writer = null;
 
 	public GPX() {
@@ -23,13 +26,12 @@ public class GPX implements CommandListener {
 	}
 
 	private static synchronized void open() {
-		FileConnection file;
 		try {
 			do {
 				file = (FileConnection) Connector.open(Settings.Values.completePath() + now() + ".gpx");
 			} while(file.exists());
+			AppLog.log("Creating " + file.getName());
 			file.create();
-			AppLog.log("Created " + file.getName());
 		} catch (Exception e) {
 			AppLog.log("> " + e.getMessage());
 			return;
@@ -38,6 +40,7 @@ public class GPX implements CommandListener {
 			writer = new PrintStream(file.openOutputStream());
 		} catch (Exception e) {
 			AppLog.log("> " + e.getMessage());
+			AppLog.log("Deleting " + file.getName());
 			try {
 				file.delete();
 			} catch (Exception f) {
@@ -51,20 +54,29 @@ public class GPX implements CommandListener {
 	}
 
 	private static synchronized void close() {
-		writer.println("</trk>");
-		writer.println("</gpx>");
-		writer.close();
+		if(trkIsEmpty) {
+			AppLog.log("Deleting unused " + file.getName());
+			try {
+				file.delete();
+			} catch (IOException e) {
+				AppLog.log("> " + e.getMessage());
+			}
+		} else {
+			writer.println("</trk>");
+			writer.println("</gpx>");
+			writer.close();
+		}
 	}
 
 	private static String now() {
 		calendar.setTime(new Date());
-		return calendar.get(Calendar.YEAR) + "-" + StringUtil.twoDigits(calendar.get(Calendar.MONTH)) + "-" + StringUtil.twoDigits(calendar.get(Calendar.DAY_OF_MONTH)) + "_"
+		return calendar.get(Calendar.YEAR) + "-" + StringUtil.twoDigits(calendar.get(Calendar.MONTH) + 1) + "-" + StringUtil.twoDigits(calendar.get(Calendar.DAY_OF_MONTH)) + "_"
 				+ StringUtil.twoDigits(calendar.get(Calendar.HOUR_OF_DAY)) + StringUtil.twoDigits(calendar.get(Calendar.MINUTE)) + StringUtil.twoDigits(calendar.get(Calendar.SECOND));
 	}
 	
 	private static String dateTime(long time) {
 		calendar.setTime(new Date(time));
-		return calendar.get(Calendar.YEAR) + "-" + StringUtil.twoDigits(calendar.get(Calendar.MONTH)) + "-" + StringUtil.twoDigits(calendar.get(Calendar.DAY_OF_MONTH)) + "T"
+		return calendar.get(Calendar.YEAR) + "-" + StringUtil.twoDigits(calendar.get(Calendar.MONTH) + 1) + "-" + StringUtil.twoDigits(calendar.get(Calendar.DAY_OF_MONTH)) + "T"
 				+ StringUtil.twoDigits(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + StringUtil.twoDigits(calendar.get(Calendar.MINUTE)) + ":" + StringUtil.twoDigits(calendar.get(Calendar.SECOND)) + "." + StringUtil.twoDigits(calendar.get(Calendar.MILLISECOND) / 10) + "Z";
 	}
 
@@ -74,6 +86,7 @@ public class GPX implements CommandListener {
 		}
 		writer.println("\t<trkseg>");
 		activeSegment = true;
+		trkIsEmpty = false;
 	}
 
 	public static synchronized void stopSegment() {
@@ -100,13 +113,10 @@ public class GPX implements CommandListener {
 		if(displayable == null) {
 			GPX.stopSegment();
 			GPX.close();
-		} else if(command != null) {
-			String label = command.getLabel();
-			if(label.equals("Pause")) {
-				GPX.stopSegment();
-			} else if(label.equals("Resume")) {
-				GPX.startSegment();
-			}
+		} else if(command == Training.pauseCommand) {
+			GPX.stopSegment();
+		} else if(command == Training.resumeCommand) {
+			GPX.startSegment();
 		}
 	}
 }

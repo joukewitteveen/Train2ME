@@ -91,11 +91,7 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 	}
 
 	public void commandAction(Command command, Displayable displayable) {
-		if(command == Training.pauseCommand) {
-			GPX.stopSegment();
-		} else if(command == Training.resumeCommand) {
-			GPX.startSegment();
-		} else if(command == Training.nextEpochCommand) {
+		if(command == Training.nextEpochCommand) {
 			Position.removeHandler(this);
 			parent.removeCommandListener(this);
 		}

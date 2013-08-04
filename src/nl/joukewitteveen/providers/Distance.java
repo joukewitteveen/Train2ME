@@ -98,7 +98,6 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 
 	public void commandAction(Command command, Displayable displayable) {
 		if(command == Training.pauseCommand) {
-			GPX.stopSegment();
 			Position.removeHandler(this);
 			pause = Position.getTotalDistance();
 		} else if(command == Training.resumeCommand) {
@@ -106,7 +105,6 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 			if(stop != Float.NaN) {
 				stop += Position.getTotalDistance() - pause;
 			}
-			GPX.startSegment();
 			Position.addHandler(this);
 		} else if(command == Training.nextEpochCommand) {
 			Position.removeHandler(this);
