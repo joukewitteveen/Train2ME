@@ -38,6 +38,8 @@ public class Training implements CommandListener {
 				provider = (String) specification.nextElement();
 				if(provider.equals("Distance")) {
 					providers[i] = new Distance(this, regions[i], specification);
+				} else if(provider.equals("Metronome")) {
+					providers[i] = new Metronome(this, regions[i], specification);
 				} else if(provider.equals("Speed")) {
 					providers[i] = new Speed(this, regions[i], specification);
 				} else if(provider.equals("Text")) {
