@@ -103,7 +103,7 @@ public class Timer extends Provider implements CommandListener {
 			this.stop = stop;
 		}
 
-		public void run() {
+		public synchronized void run() {
 			long time;
 			if(stop == Long.MIN_VALUE) {
 				time = Timer.getTimeS() - start;
@@ -112,6 +112,7 @@ public class Timer extends Provider implements CommandListener {
 				if(time < 3) {
 					if(time <= 0) {
 						AlertType.ALARM.playSound(region.getParent().getDisplay());
+						cancel();
 						training.nextEpoch();
 					} else {
 						AlertType.INFO.playSound(region.getParent().getDisplay());

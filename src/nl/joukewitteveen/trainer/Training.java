@@ -1,6 +1,5 @@
 package nl.joukewitteveen.trainer;
 
-import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
@@ -25,7 +24,7 @@ public class Training implements CommandListener {
 		this.specification = specification;
 	}
 
-	public void nextEpoch() {
+	public synchronized void nextEpoch() {
 		commandAction(nextEpochCommand, null);
 		for(int i = 0; i < fields.length; i++) {
 			if(fields[i] != null) {
@@ -67,14 +66,15 @@ public class Training implements CommandListener {
 		listeners.addElement(listener);
 	}
 
-	public void removeCommandListener(CommandListener listener) {
-		listeners.removeElement(listener);
+	public boolean removeCommandListener(CommandListener listener) {
+		return listeners.removeElement(listener);
 	}
 
 	public void commandAction(Command command, Displayable displayable) {
-		Enumeration listeners = this.listeners.elements();
-		while(listeners.hasMoreElements()) {
-			((CommandListener) listeners.nextElement()).commandAction(command, displayable);
+		CommandListener[] persistentListeners = new CommandListener[listeners.size()];
+		listeners.copyInto(persistentListeners);
+		for(int i = 0; i < persistentListeners.length; i++) {
+			persistentListeners[i].commandAction(command, displayable);
 		}
 		if(command == pauseCommand) {
 			displayable.removeCommand(pauseCommand);

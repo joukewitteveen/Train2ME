@@ -1,6 +1,6 @@
 package nl.joukewitteveen.providers.movement;
 
-import java.util.*;
+import java.util.Vector;
 
 import javax.microedition.location.*;
 
@@ -13,10 +13,11 @@ public class Position {
 	private static LocationProvider provider = null;
 	private static final LocationListener listener = new LocationListener() {
 		public void locationUpdated(LocationProvider provider, Location location) {
-			Enumeration handlers = clients.elements();
+			MovementHandler[] persistentClients = new MovementHandler[clients.size()];
+			clients.copyInto(persistentClients);
 			if(!location.isValid()) {
-				while(handlers.hasMoreElements()) {
-					((MovementHandler) handlers.nextElement()).movementUpdate(totalDistance, -1);
+				for(int i = 0; i < persistentClients.length; i++) {
+					persistentClients[i].movementUpdate(totalDistance, -1);
 				}
 				return;
 			}
@@ -28,16 +29,17 @@ public class Position {
 				}
 				previousPosition = (Coordinates) position;
 			}
-			while(handlers.hasMoreElements()) {
-				((MovementHandler) handlers.nextElement()).movementUpdate(totalDistance, location.getSpeed());
+			for(int i = 0; i < persistentClients.length; i++) {
+				persistentClients[i].movementUpdate(totalDistance, location.getSpeed());
 			}
 		}
 
 		public void providerStateChanged(LocationProvider provider, int newState) {
 			if(newState != LocationProvider.AVAILABLE) {
-				Enumeration handlers = clients.elements();
-				while(handlers.hasMoreElements()) {
-					((MovementHandler) handlers.nextElement()).movementUpdate(Float.NaN, Float.NaN);
+				MovementHandler[] persistentClients = new MovementHandler[clients.size()];
+				clients.copyInto(persistentClients);
+				for(int i = 0; i < persistentClients.length; i++) {
+					persistentClients[i].movementUpdate(Float.NaN, Float.NaN);
 				}
 			}
 		}
@@ -69,11 +71,11 @@ public class Position {
 		return true;
 	}
 
-	public static synchronized void addHandler(MovementHandler handler) {
+	public static void addHandler(MovementHandler handler) {
 		clients.addElement(handler);
 	}
 
-	public static synchronized void removeHandler(MovementHandler handler) {
-		clients.removeElement(handler);
+	public static boolean removeHandler(MovementHandler handler) {
+		return clients.removeElement(handler);
 	}
 }
