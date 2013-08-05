@@ -16,10 +16,7 @@ public class StringUtil {
 	/* Format a positive floating point number using one decimal */
 	public static String oneDecimal(float number) {
 		int tenfold = (int) (number * 10 + 0.5f);
-		if(tenfold % 10 == 0) {
-			return (tenfold / 10) + ".0";
-		}
-		return Float.toString(tenfold / 10f);  // TODO: This could yield many decimals
+		return (tenfold / 10) + "." + (tenfold % 10);
 	}
 
 	/* Format a positive number using at least two digits */

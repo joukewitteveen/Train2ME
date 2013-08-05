@@ -28,24 +28,12 @@ public class Dashboard extends MIDlet implements CommandListener {
 	}
 
 	private static int stringToAnchor(String name) {
-		if(name.equals("TOPLEFT")) {
-			return BigText.TextRegion.TOPLEFT;
-		} else if(name.equals("TOPCENTER")) {
-			return BigText.TextRegion.TOPCENTER;
-		} else if(name.equals("TOPRIGHT")) {
-			return BigText.TextRegion.TOPRIGHT;
-		/*} else if(name.equals("CENTERLEFT")) {
-    		return BigText.TextRegion.CENTERLEFT;
-    	} else if(name.equals("CENTER")) {
-    		return BigText.TextRegion.CENTER
-    	} else if(name.equals("CENTERRIGHT")) {
-    	 	return BigText.TextRegion.CENTERRIGHT;*/
-		} else if(name.equals("BOTTOMLEFT")) {
-			return BigText.TextRegion.BOTTOMLEFT;
-		} else if(name.equals("BOTTOMCENTER")) {
-			return BigText.TextRegion.BOTTOMCENTER;
-		} else if(name.equals("BOTTOMRIGHT")) {
-			return BigText.TextRegion.BOTTOMRIGHT;
+		if(name.equals("LEFT")) {
+			return BigText.TextRegion.LEFT;
+		} else if(name.equals("CENTER")) {
+			return BigText.TextRegion.CENTER;
+		} else if(name.equals("RIGHT")) {
+			return BigText.TextRegion.RIGHT;
 		} else {
 			return -1;
 		}

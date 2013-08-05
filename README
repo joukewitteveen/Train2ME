@@ -18,22 +18,14 @@ line must consist of the following 4 fields in the given order:
  3. The height of the region
  4. The position of the anchor point relative to the region.
     Possible values are:
-     -  TOPLEFT (the region is below and to the right of its anchor
+     -  LEFT (the region is to the right of its anchor point)
+     -  CENTER (the region is horizontally centered around its anchor
         point)
-     -  TOPCENTER (the region is centered below its anchor point)
-     -  TOPRIGHT (the region is below and to the left of its anchor
-        point)
-     -  CENTERLEFT (the region is centered to the right of its anchor
-        point)
-     -  CENTER (the region is centered around its anchor point)
-     -  CENTERRIGHT (the region is centered to the left of its anchor
-        point)
-     -  BOTTOMLEFT (the region is above and to the right of its anchor
-        point)
-     -  BOTTOMCENTER (the region is centered above its anchor point)
-     -  BOTTOMRIGHT (the region is above and to the left of its anchor
-        point)
-The contents of a region are scaled to match the region's height.
+     -  RIGHT (the region is to the left of its anchor point)
+The contents of a region are scaled to match the region's height and
+extend above the vertical coordinate of its anchor point. Coordinates
+and height are measured in pixels. The top left corner has coordinate
+pair (0, 0) and all visible points have positive coordinates.
 
 After these lines the contents of the regions are specified. A training
 is divided into consecutive epochs. Each epoch is represented by NUM
