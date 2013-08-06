@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGElement;
 import org.w3c.dom.svg.SVGSVGElement;
 
-import nl.joukewitteveen.util.AppLog;
+import nl.joukewitteveen.util.*;
 
 import com.samsung.util.LCDLight;
 
@@ -16,7 +16,6 @@ import com.samsung.util.LCDLight;
 public class BigText extends Canvas {
 	private static final String SVGNS = "http://www.w3.org/2000/svg";
 	private final Display display;
-	private boolean activeLight = false;
 	private ScalableGraphics renderer;
 	private SVGImage image;
 
@@ -57,7 +56,7 @@ public class BigText extends Canvas {
 		image.setViewportHeight(getHeight());
 		renderer.render(0, 0, image);
 		renderer.releaseTarget();
-		if(activeLight) {
+		if(Settings.Values.activeLighting) {
 			try {
 				LCDLight.on(61);
 			} catch(Exception e) {
@@ -68,10 +67,6 @@ public class BigText extends Canvas {
 
 	public Display getDisplay() {
 		return display;
-	}
-
-	public void setActiveLighting(boolean light) {
-		activeLight = light;
 	}
 
 	public static class TextRegion {

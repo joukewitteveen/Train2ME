@@ -58,7 +58,6 @@ public class Dashboard extends MIDlet implements CommandListener {
 			addCommands(canvas);
 			canvas.addCommand(Training.pauseCommand);
 			canvas.setCommandListener(this);
-			canvas.setActiveLighting(Settings.Values.activeLighting);
 			training = new Training(regions, fields);
 		} catch(Exception e) {
 			AppLog.log("Could not parse the training file");
