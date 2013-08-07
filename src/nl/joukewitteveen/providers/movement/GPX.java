@@ -9,7 +9,7 @@ import javax.microedition.lcdui.*;
 import javax.microedition.location.QualifiedCoordinates;
 
 import nl.joukewitteveen.util.*;
-import nl.joukewitteveen.trainer.Training;;
+import nl.joukewitteveen.trainer.*;
 
 public class GPX implements CommandListener {
 	private static boolean activeSegment = false;
@@ -110,7 +110,7 @@ public class GPX implements CommandListener {
 	}
 
 	public void commandAction(Command command, Displayable displayable) {
-		if(displayable == null) {
+		if(command == Dashboard.exitCommand) {
 			GPX.stopSegment();
 			GPX.close();
 		} else if(command == Training.pauseCommand) {
