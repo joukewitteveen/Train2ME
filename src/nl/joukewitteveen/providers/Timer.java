@@ -109,7 +109,7 @@ public class Timer extends Provider implements CommandListener {
 				time = Timer.getTimeS() - start;
 			} else {
 				time = stop - Timer.getTimeS();
-				if(time < 3) {
+				if(time <= 3) {
 					if(time <= 0) {
 						AlertType.ALARM.playSound(region.getParent().getDisplay());
 						cancel();

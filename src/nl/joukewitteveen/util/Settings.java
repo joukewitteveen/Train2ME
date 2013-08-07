@@ -93,11 +93,9 @@ public class Settings implements CommandListener {
 				RecordStore recordStore = RecordStore.openRecordStore(recordStoreName, true);
 				ChoiceGroup storage = (ChoiceGroup) menu.get(0);
 				Values.root = storage.getString(storage.getSelectedIndex());
-				byte[] root = Values.root.getBytes();
-				recordStore.addRecord(root, 0, root.length);
+				recordStore.addRecord(Values.root.getBytes(), 0, Values.root.length());
 				Values.path = ((TextField) menu.get(1)).getString();
-				byte[] path = Values.path.getBytes();
-				recordStore.addRecord(path, 0, path.length);
+				recordStore.addRecord(Values.path.getBytes(), 0, Values.path.length());
 				Values.activeLighting = ((ChoiceGroup) menu.get(2)).isSelected(0);
 				recordStore.addRecord(new byte[]{(byte) (Values.activeLighting ? 1 : 0)}, 0, 1);
 				recordStore.closeRecordStore();
