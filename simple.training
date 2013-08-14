@@ -1,9 +1,9 @@
 5
 120	90	70	CENTER
-230	110	15	RIGHT
+235	110	15	RIGHT
 120	190	50	CENTER
-10	310	25	LEFT
-230	310	25	RIGHT
+5	310	25	LEFT
+235	310	25	RIGHT
 Speed	.km/h
 Text	km/h
 Text
@@ -12,5 +12,5 @@ Wait	Press Continue
 Speed	.min/km
 Text	min/km
 Text
-Distance	km
-Timer	.min	0
+Distance	km	0
+Timer	.h	0

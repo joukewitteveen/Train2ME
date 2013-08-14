@@ -125,6 +125,7 @@ public class Dashboard extends MIDlet implements DisplayManager, CommandListener
 class SelectTraining implements CommandListener {
 	private Dashboard dashboard;
 	private static final Command refreshCommand = new Command("Refresh", Command.SCREEN, 0);
+	private static final Command intervalsCommand = new Command("New IT", "New Interval Training", Command.SCREEN, 2);
 
 	public SelectTraining(Dashboard dashboard) {
 		this.dashboard = dashboard;
@@ -148,6 +149,7 @@ class SelectTraining implements CommandListener {
 		refreshList(list);
 		Dashboard.addCommands(list);
 		list.addCommand(refreshCommand);
+		list.addCommand(intervalsCommand);
 		list.setCommandListener(this);
 		return (Displayable) list;
 	}
@@ -166,6 +168,8 @@ class SelectTraining implements CommandListener {
 			}
 		} else if(command == refreshCommand) {
 			refreshList((List) displayable);
+		} else if(command == intervalsCommand) {
+			dashboard.setDisplay((new Intervals(dashboard)).getDisplayable());
 		} else {
 			dashboard.commandAction(command, displayable);
 		}
