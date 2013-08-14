@@ -8,8 +8,7 @@ import javax.microedition.rms.*;
 
 public class Settings implements CommandListener {
 	private static final String recordStoreName = "Train2ME";
-	private Display display;
-	private Displayable previousDisplayable;
+	private DisplayManager displayManager;
 	private static final Form menu = new Form("Settings", new Item[]{
 			new ChoiceGroup("Storage", Choice.POPUP),
 			new TextField("Path", "", 40, TextField.ANY),
@@ -53,9 +52,8 @@ public class Settings implements CommandListener {
 		}
 	}
 
-	public Settings(Display display) {
-		this.display = display;
-		previousDisplayable = display.getCurrent();
+	public Settings(DisplayManager displayManager) {
+		this.displayManager = displayManager;
 	}
 
 	public Displayable getDisplayable() {
@@ -106,6 +104,6 @@ public class Settings implements CommandListener {
 		}
 		form.removeCommand(OKCommand);
 		form.removeCommand(CancelCommand);
-		display.setCurrent(previousDisplayable);
+		displayManager.previousDisplay();
 	}
 }

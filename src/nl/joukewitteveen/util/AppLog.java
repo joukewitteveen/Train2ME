@@ -6,8 +6,7 @@ public class AppLog implements CommandListener {
 	private static final int lines = 25;
 	private static int head = 0;
 	private static String[] messages = new String[lines];
-	private final Display display;
-	private final Displayable nextDisplayable;
+	private final DisplayManager displayManager;
 
 	public static void log(String message) {
 		System.out.println(message);
@@ -16,9 +15,8 @@ public class AppLog implements CommandListener {
 			head -= lines;
 	}
 
-	public AppLog(Display display, Displayable nextDisplayable) {
-		this.display = display;
-		this.nextDisplayable = nextDisplayable;
+	public AppLog(DisplayManager displayManager) {
+		this.displayManager = displayManager;
 	}
 
 	public Displayable getDisplayable() {
@@ -40,6 +38,6 @@ public class AppLog implements CommandListener {
 	}
 
 	public void commandAction(Command command, Displayable text) {
-		display.setCurrent(nextDisplayable);
+		displayManager.previousDisplay();
 	}
 }

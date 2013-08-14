@@ -3,7 +3,7 @@
 package nl.joukewitteveen.trainer;
 
 import java.io.*;
-import java.util.Enumeration;
+import java.util.*;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
@@ -12,20 +12,15 @@ import javax.microedition.midlet.*;
 
 import nl.joukewitteveen.util.*;
 
-public class Dashboard extends MIDlet implements CommandListener {
+public class Dashboard extends MIDlet implements DisplayManager, CommandListener {
 	// We do not use Command.EXIT to make accidental exits more unlikely
 	public static final Command exitCommand = new Command("Exit", Command.SCREEN, 1);
-	public static final Command settingsCommand = new Command("Settings", Command.SCREEN, 1);
-	public static final Command logCommand = new Command("Log", "Show Application Log", Command.SCREEN, 2);
+	public static final Command settingsCommand = new Command("Settings", Command.SCREEN, 10);
+	public static final Command logCommand = new Command("Log", "Show Application Log", Command.SCREEN, 20);
+	private Display display;
+	private Stack displayStack = new Stack();
 	private BigText canvas;
 	private Training training = null;
-	Display display;
-
-	public Dashboard() {
-		display = Display.getDisplay(this);
-		AppLog.log("Train2ME " + Settings.Values.version);
-		Settings.readValues();
-	}
 
 	private static int stringToAnchor(String name) {
 		if(name.equals("LEFT")) {
@@ -37,6 +32,12 @@ public class Dashboard extends MIDlet implements CommandListener {
 		} else {
 			return -1;
 		}
+	}
+
+	public Dashboard() {
+		display = Display.getDisplay(this);
+		AppLog.log("Train2ME " + Settings.Values.version);
+		Settings.readValues();
 	}
 
 	public void initializeTraining(InputStream source) {
@@ -73,9 +74,9 @@ public class Dashboard extends MIDlet implements CommandListener {
 
 	public void startApp() {
 		if(training == null) {
-			display.setCurrent((new SelectTraining(this)).getDisplayable());
+			setDisplay((new SelectTraining(this)).getDisplayable());
 		} else {
-			display.setCurrent(canvas);
+			setDisplay(canvas);
 			training.nextEpoch();
 		}
 	}
@@ -89,11 +90,24 @@ public class Dashboard extends MIDlet implements CommandListener {
 		}
 	}
 
+	public Display getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(Displayable displayable) {
+		display.setCurrent((Displayable) displayStack.push(displayable));
+	}
+
+	public void previousDisplay() throws EmptyStackException {
+		displayStack.pop();
+		display.setCurrent((Displayable) displayStack.peek());
+	}
+
 	public void commandAction(Command command, Displayable displayable) {
 		if(command == settingsCommand) {
-			display.setCurrent((new Settings(display)).getDisplayable());
+			setDisplay((new Settings(this)).getDisplayable());
 		} else if(command == logCommand) {
-			display.setCurrent((new AppLog(display, displayable)).getDisplayable());
+			setDisplay((new AppLog(this)).getDisplayable());
 		} else if(command == exitCommand) {
 			try {
 				destroyApp(false);
