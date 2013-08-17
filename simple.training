@@ -4,11 +4,14 @@
 120	190	50	CENTER
 5	310	25	LEFT
 235	310	25	RIGHT
+
 Speed	.km/h
 Text	km/h
 Text
 Text	
 Wait	Press Continue
+
+// GPX logging starts here
 Speed	.min/km
 Text	min/km
 Text

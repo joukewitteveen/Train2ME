@@ -2,14 +2,13 @@ Train2ME training specification syntax
 --------------------------------------
 
 Training specification files for Train2ME have the '.training' extension
-and must follow a strict syntax. The file is made up from lines of
-tab-separated fields. Empty lines are not ignored and there is no
-support for comments.
+and must follow a strict syntax. The file is made up of lines of
+tab-separated fields.
 
-The first line dictates the number of information regions used by the
-training. Information regions should be thought of as textboxes on the
-screen of the device. We will use NUM to indicate this number in this
-document.
+The first field of the first line dictates the number of information
+regions used by the training. Information regions should be thought of
+as textboxes on the screen of the device. We will use NUM to indicate
+this number in this document.
 
 The next NUM lines specify the layout of the information regions. Each
 line must consist of the following 4 fields in the given order:
@@ -24,13 +23,15 @@ line must consist of the following 4 fields in the given order:
      -  RIGHT (the region is to the left of its anchor point)
 The contents of a region are scaled to match the region's height and
 extend above the vertical coordinate of its anchor point. Coordinates
-and height are measured in pixels. The top left corner has coordinate
-pair (0, 0) and all visible points have positive coordinates.
+and height are measured in pixels. The top left corner of the screen
+has coordinate pair (0, 0) and all visible points have positive
+coordinates.
 
 After these lines the contents of the regions are specified. A training
 is divided into consecutive epochs. Each epoch is represented by NUM
 lines in the specification. The nth line of the NUM lines specifies the
-contents of the nth region during the specified epoch.
+contents of the nth region during the specified epoch. Empty lines are
+ignored, as are lines starting with '//'.
 
 The first field of every line of content specification contains the name
 of a content provider. The remaining fields are parameters of the

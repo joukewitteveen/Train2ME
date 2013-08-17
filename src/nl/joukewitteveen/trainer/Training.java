@@ -48,6 +48,8 @@ public class Training implements CommandListener {
 					providers[i] = new Timer(this, regions[i], specification);
 				} else if(provider.equals("Wait")) {
 					providers[i] = new Wait(this, regions[i], specification);
+				} else if(provider.startsWith("//") || !specification.hasMoreElements()) {
+					i--;
 				} else {
 					AppLog.log("Unsupported provider: " + provider);
 				}
