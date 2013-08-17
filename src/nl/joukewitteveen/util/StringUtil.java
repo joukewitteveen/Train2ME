@@ -42,7 +42,10 @@ public class StringUtil {
 			skipToNextRow();
 		}
 
-		public void skipToNextRow() {
+		public void skipToNextRow() throws NoSuchElementException {
+			if(!moreRows) {
+				throw new NoSuchElementException("No more rows");
+			}
 			try {
 				if(moreElements) {
 					char c;
@@ -65,9 +68,9 @@ public class StringUtil {
 
 		public Object nextElement() throws NoSuchElementException {
 			if(!moreElements) {
-				throw new NoSuchElementException();
+				throw new NoSuchElementException("No more fields");
 			}
-			String s = "";
+			String field = "";
 			try {
 				char c;
 				read:
@@ -81,14 +84,14 @@ public class StringUtil {
 						case '\t':
 							break read;
 						}
-						s += c;
+						field += c;
 					}
 			} catch (IOException e) {
 				AppLog.log("> " + e.getMessage());
 				moreElements = false;
 				moreRows = false;
 			}
-			return s;
+			return field;
 		}
 	}
 }
