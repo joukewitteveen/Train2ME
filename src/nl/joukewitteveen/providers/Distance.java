@@ -65,10 +65,10 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 			distance = (stop - distance);
 			if(distance <= 3 * speed){
 				if(distance <= 0) {
-					AlertType.ALARM.playSound(region.getParent().getDisplay());
+					ToneUtil.play(ToneUtil.ALARM);
 					parent.nextEpoch();
 				} else {
-					AlertType.INFO.playSound(region.getParent().getDisplay());
+					ToneUtil.play(ToneUtil.INFO);
 				}
 			}
 		}

@@ -7,23 +7,12 @@ import javax.microedition.lcdui.*;
 
 import nl.joukewitteveen.Provider;
 import nl.joukewitteveen.trainer.*;
-import nl.joukewitteveen.util.StringUtil;
+import nl.joukewitteveen.util.*;
 
 public class Metronome extends Provider implements CommandListener {
 	private float bpm;
 	private java.util.Timer timer;
-	private Tick tick;
-	static class Tick extends TimerTask {
-		private Display display;
-
-		public Tick(Display display) {
-			this.display = display;
-		}
-
-		public void run() {
-			AlertType.INFO.playSound(display);
-		}
-	};
+	private TimerTask tick;
 
 	public Metronome(Training parent, BigText.TextRegion region, Enumeration args) {
 		super(parent, region, args);
@@ -38,7 +27,11 @@ public class Metronome extends Provider implements CommandListener {
 
 	public void run() {
 		region.writeText(StringUtil.oneDecimal(bpm));
-		tick = new Tick(region.getParent().getDisplay());
+		tick = new TimerTask() {
+			public void run() {
+				ToneUtil.play(ToneUtil.INFO);
+			}
+		};
 		timer.scheduleAtFixedRate(tick, 0, (long) (60000 / bpm));
 	}
 

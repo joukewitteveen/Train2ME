@@ -111,11 +111,11 @@ public class Timer extends Provider implements CommandListener {
 				time = stop - Timer.getTimeS();
 				if(time <= 3) {
 					if(time <= 0) {
-						AlertType.ALARM.playSound(region.getParent().getDisplay());
+						ToneUtil.play(ToneUtil.ALARM);
 						cancel();
 						training.nextEpoch();
 					} else {
-						AlertType.INFO.playSound(region.getParent().getDisplay());
+						ToneUtil.play(ToneUtil.INFO);
 					}
 				}
 			}
