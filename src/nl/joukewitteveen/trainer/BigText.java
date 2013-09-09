@@ -15,12 +15,10 @@ import com.samsung.util.LCDLight;
 
 public class BigText extends Canvas {
 	private static final String SVGNS = "http://www.w3.org/2000/svg";
-	private final Display display;
 	private ScalableGraphics renderer;
 	private SVGImage image;
 
-	public BigText(Display display, TextRegion[] regions){
-		this.display = display;
+	public BigText(TextRegion[] regions){
 		renderer = ScalableGraphics.createInstance();
 		image = SVGImage.createEmptyImage(null);
 		Document document = image.getDocument();
@@ -63,10 +61,6 @@ public class BigText extends Canvas {
 				AppLog.log("Could not set Active Lighting");
 			}
 		}
-	}
-
-	public Display getDisplay() {
-		return display;
 	}
 
 	public static class TextRegion {

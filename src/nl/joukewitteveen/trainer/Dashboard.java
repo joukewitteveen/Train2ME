@@ -55,7 +55,7 @@ public class Dashboard extends MIDlet implements DisplayManager, CommandListener
 					);
 				fields.skipToNextRow();
 			}
-			canvas = new BigText(display, regions);
+			canvas = new BigText(regions);
 			addCommands(canvas);
 			canvas.addCommand(Training.pauseCommand);
 			canvas.setCommandListener(this);

@@ -12,9 +12,10 @@ import nl.joukewitteveen.util.*;
 
 public class Timer extends Provider implements CommandListener {
 	private static final int UNSUPPORTED = -1, SECONDS = 1, MINUTES = 60, HOURS = 3600;
+	private static long start = getTimeS();
+	private long pause = 0, stop;
 	private int unit;
 	private String label;
-	private long pause, stop;
 	private java.util.Timer timer;
 	private Watch watch;
 
@@ -46,7 +47,7 @@ public class Timer extends Provider implements CommandListener {
 		if(args.hasMoreElements()) {
 			float arg = Float.parseFloat((String) args.nextElement());
 			if(arg == Float.parseFloat("0")) {
-				Watch.start = getTimeS();
+				start = getTimeS();
 				stop = Long.MIN_VALUE;
 			} else {
 				stop = getTimeS() + (long) (arg * unit);
@@ -67,7 +68,7 @@ public class Timer extends Provider implements CommandListener {
 		if(unit == UNSUPPORTED) {
 			return;
 		}
-		watch = new Watch(parent, region, unit, label, stop);
+		watch = new Watch();
 		timer.scheduleAtFixedRate(watch, 0, (unit == HOURS) ? 60000 : 1000);
 	}
 
@@ -76,7 +77,7 @@ public class Timer extends Provider implements CommandListener {
 			watch.cancel();
 			pause = getTimeS();
 		} else if(command == Training.resumeCommand) {
-			Watch.start += getTimeS() - pause;
+			start += getTimeS() - pause;
 			if(stop != Long.MIN_VALUE) {
 				stop += getTimeS() - pause;
 			}
@@ -87,22 +88,7 @@ public class Timer extends Provider implements CommandListener {
 		}
 	}
 
-	private static class Watch extends TimerTask {
-		static long start = Timer.getTimeS();
-		private long stop;
-		private int unit;
-		private String label;
-		private Training training;
-		private BigText.TextRegion region;
-
-		public Watch(Training training, BigText.TextRegion region, int unit, String label, long stop) {
-			this.training = training;
-			this.region = region;
-			this.unit = unit;
-			this.label = label;
-			this.stop = stop;
-		}
-
+	private class Watch extends TimerTask {
 		public synchronized void run() {
 			long time;
 			if(stop == Long.MIN_VALUE) {
@@ -113,7 +99,7 @@ public class Timer extends Provider implements CommandListener {
 					if(time <= 0) {
 						ToneUtil.play(ToneUtil.ALARM);
 						cancel();
-						training.nextEpoch();
+						parent.nextEpoch();
 					} else {
 						ToneUtil.play(ToneUtil.INFO);
 					}

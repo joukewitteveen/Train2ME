@@ -45,7 +45,7 @@ public class Settings implements CommandListener {
 			if(roots.hasMoreElements()) {
 				Values.root = (String) roots.nextElement();
 			} else {
-				Values.root = "//";
+				Values.root = "/";
 			}
 			Values.path = "Train2ME/";
 			Values.activeLighting = false;

@@ -13,7 +13,7 @@ import nl.joukewitteveen.Provider;
 public class Distance extends Provider implements MovementHandler, CommandListener {
 	private static final int M = 1, KM = 1000, NM = 1852;
 	private static float start = 0;
-	private float pause, stop;
+	private float pause = 0, stop;
 	private int unit;
 	private String label;
 	private float previousDistance = Float.NaN;
@@ -54,7 +54,6 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 			stop = Float.NaN;
 		}
 		Position.addHandler(this);
-		pause = 0;
 		parent.addCommandListener(this);
 	}
 
