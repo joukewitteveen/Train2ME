@@ -15,7 +15,7 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 	private static final float[] factors = { 1, 3.6f / 1.852f, 3.6f, 6 / 100f };
 	private int unit;
 	private String label;
-	private float previousSpeed = Float.NaN;
+	private float previousSpeed = Float.NaN, minimumSpeed, maximumSpeed;
 
 	public Speed(Training parent, BigText.TextRegion region, Enumeration args) {
 		super(parent, region, args);
@@ -43,12 +43,29 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 			unit = MS;
 			label = " m/s";
 		}
+		if(args.hasMoreElements()) {
+			minimumSpeed = Float.parseFloat((String) args.nextElement());
+		} else {
+			minimumSpeed = Float.NEGATIVE_INFINITY;
+		}
+		if(args.hasMoreElements()) {
+			maximumSpeed = Float.parseFloat((String) args.nextElement());
+		} else {
+			maximumSpeed = Float.POSITIVE_INFINITY;
+		}
 		Position.addHandler(this);
 		parent.addCommandListener(this);
 	}
 
 	public synchronized void movementUpdate(float distance, float speed) {
-		if(speed < 0 || speed == previousSpeed) {
+		if(speed < 0) {
+			return;
+		}
+		speed *= factors[unit];
+		if(speed < minimumSpeed || speed > maximumSpeed) {
+			ToneUtil.playBlocking(ToneUtil.WARNING, 3, 375, 6500);
+		}
+		if(speed == previousSpeed) {
 			return;
 		}
 		previousSpeed = speed;
@@ -58,10 +75,10 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 			case MS:
 			case KT:
 			case KMH:
-				value = StringUtil.oneDecimal(factors[unit] * speed);
+				value = StringUtil.oneDecimal(speed);
 				break;
 			case MINKM:
-				float pace = 1 / (factors[unit] * speed);
+				float pace = 1 / speed;
 				if(pace <= 60) {
 					int subPace = (int) ((pace % 1) * 60 + 0.5f);
 					value = ((int) pace) + ":" + StringUtil.twoDigits(subPace);

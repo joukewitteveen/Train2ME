@@ -45,7 +45,7 @@ are:
     value. Once the distance reaches zero, the training moves to the
     next epoch.
  -  Metronome [<bpm>]
- -  Speed [.][m/s* | km/h | kt | min/km]
+ -  Speed [.][m/s* | km/h | kt | min/km] [<minimum>] [<maximum>]
     A '.' in front of the unit prevents the unit from being shown.
  -  Text [<text>]
     When no text is provided, the current time is shown.
