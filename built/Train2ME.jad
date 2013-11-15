@@ -1,10 +1,10 @@
-MIDlet-Name: Train2ME
-MIDlet-Vendor: Jouke Witteveen
-MIDlet-Version: 0.5
+MIDlet-1: Train2ME,,nl.joukewitteveen.trainer.Dashboard
+MIDlet-Jar-Size: 56848
 MIDlet-Jar-URL: Train2ME.jar
-MIDlet-Jar-Size: 49404
+MIDlet-Name: Train2ME
+MIDlet-Permissions: javax.microedition.io.Connector.file.read
+MIDlet-Permissions-Opt: javax.microedition.io.Connector.file.write,javax.microedition.location.Location,javax.microedition.io.Connector.bluetooth.client
+MIDlet-Vendor: Jouke Witteveen
+MIDlet-Version: 0.6
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.1
-MIDlet-1: Train2ME,,nl.joukewitteveen.trainer.Dashboard
-MIDlet-Permissions-Opt: javax.microedition.location.Location,javax.microedition.io.Connector.file.write
-MIDlet-Permissions: javax.microedition.io.Connector.file.read

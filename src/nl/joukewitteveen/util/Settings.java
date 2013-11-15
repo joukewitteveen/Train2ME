@@ -18,7 +18,7 @@ public class Settings implements CommandListener {
 	private static final Command OKCommand = new Command("OK", Command.OK, 0);
 	private static final Command CancelCommand = new Command("Cancel", Command.CANCEL, 1);
 	public static class Values {
-		public static final String version = "0.5";
+		public static final String version = "0.6";
 		public static String root;
 		public static String path;
 		public static boolean vibrate;

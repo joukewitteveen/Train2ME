@@ -1,6 +1,6 @@
 MIDlet-Name: Train2ME
 MIDlet-Vendor: Jouke Witteveen
-MIDlet-Version: 0.5
+MIDlet-Version: 0.6
 MIDlet-Jar-URL: Train2ME.jar
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.1
