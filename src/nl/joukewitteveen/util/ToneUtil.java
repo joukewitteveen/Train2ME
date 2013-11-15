@@ -23,6 +23,10 @@ public class ToneUtil {
 		}
 	}
 
+	public static void setBlocked(boolean block) {
+		notBefore = block ? Long.MAX_VALUE : 0;
+	}
+
 	public static boolean play(ToneType type) {
 		try {
 			Manager.playTone(type.note, type.duration, type.volume);

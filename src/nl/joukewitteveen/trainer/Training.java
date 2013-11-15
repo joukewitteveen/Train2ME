@@ -81,9 +81,11 @@ public class Training implements CommandListener {
 			persistentListeners[i].commandAction(command, displayable);
 		}
 		if(command == pauseCommand) {
+			ToneUtil.setBlocked(true);
 			displayable.removeCommand(pauseCommand);
 			displayable.addCommand(resumeCommand);
 		} else if(command == resumeCommand) {
+			ToneUtil.setBlocked(false);
 			displayable.removeCommand(resumeCommand);
 			displayable.addCommand(pauseCommand);
 		}
