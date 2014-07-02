@@ -44,6 +44,7 @@ are:
     <distance>, the distance is shown decreasing from the provided
     value. Once the distance reaches zero, the training moves to the
     next epoch.
+ -  HeartRate [<minimum>] [<maximum>]
  -  Metronome [<bpm>]
  -  Speed [.][m/s* | km/h | kt | min/km] [<minimum>] [<maximum>]
     A '.' in front of the unit prevents the unit from being shown.

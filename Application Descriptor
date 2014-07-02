@@ -5,5 +5,5 @@ MIDlet-Jar-URL: Train2ME.jar
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.1
 MIDlet-1: Train2ME,,nl.joukewitteveen.trainer.Dashboard
-MIDlet-Permissions-Opt: javax.microedition.location.Location,javax.microedition.io.Connector.file.write
+MIDlet-Permissions-Opt: javax.microedition.io.Connector.file.write,javax.microedition.location.Location,javax.microedition.io.Connector.bluetooth.client
 MIDlet-Permissions: javax.microedition.io.Connector.file.read

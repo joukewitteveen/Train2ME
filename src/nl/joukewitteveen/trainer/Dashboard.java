@@ -1,4 +1,4 @@
-// This MIDlet requires JSRs 75, 118, 135, 139, 179, 226
+// This MIDlet requires JSRs 75, 82, 118, 135, 139, 179, 226
 
 package nl.joukewitteveen.trainer;
 

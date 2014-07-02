@@ -1,9 +1,10 @@
-package nl.joukewitteveen.providers.movement;
+package nl.joukewitteveen.sensor;
 
 import java.util.Vector;
 
 import javax.microedition.location.*;
 
+import nl.joukewitteveen.logger.GPX;
 import nl.joukewitteveen.util.AppLog;
 
 public class Position {
@@ -44,14 +45,18 @@ public class Position {
 			}
 		}
 	};
+	public interface MovementHandler {
+		public void movementUpdate(float distance, float speed);
+	}
 
 	public static float getTotalDistance() {
 		return totalDistance;
 	}
 
 	public static synchronized boolean initialize() throws LocationException {
-		if(provider != null)
+		if(provider != null) {
 			return false;
+		}
 		Criteria criteria = new Criteria();
 		criteria.setSpeedAndCourseRequired(true);
 		criteria.setPreferredResponseTime(1000);
