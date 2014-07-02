@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.microedition.lcdui.Display;
 import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
 
@@ -11,8 +12,9 @@ public class ToneUtil {
 	public static final ToneType INFO = new ToneType(95, 250, 100),
 			ALARM = new ToneType(100, 375, 100),
 			WARNING = new ToneType(100, 250, 100);
-	static Timer timer = new Timer();
+	private static Display display;
 	private static long notBefore;
+	private static Timer timer = new Timer();
 	static class ToneType {
 		int note, duration, volume;
 
@@ -23,6 +25,10 @@ public class ToneUtil {
 		}
 	}
 
+	public static void setDisplay(Display display) {
+		ToneUtil.display = display;
+	}
+
 	public static void setBlocked(boolean block) {
 		notBefore = block ? Long.MAX_VALUE : 0;
 	}
@@ -30,6 +36,9 @@ public class ToneUtil {
 	public static boolean play(ToneType type) {
 		try {
 			Manager.playTone(type.note, type.duration, type.volume);
+			if(Settings.Values.vibrate) {
+				display.vibrate(type.duration);
+			}
 			return true;
 		} catch (MediaException e) {
 			return false;

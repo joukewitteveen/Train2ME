@@ -38,6 +38,7 @@ public class Dashboard extends MIDlet implements DisplayManager, CommandListener
 		display = Display.getDisplay(this);
 		AppLog.log("Train2ME " + Settings.Values.version);
 		Settings.readValues();
+		ToneUtil.setDisplay(display);
 	}
 
 	public void initializeTraining(InputStream source) {
