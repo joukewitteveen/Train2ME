@@ -1,4 +1,4 @@
-package nl.joukewitteveen.providers;
+package nl.joukewitteveen.provider;
 
 import java.util.Enumeration;
 

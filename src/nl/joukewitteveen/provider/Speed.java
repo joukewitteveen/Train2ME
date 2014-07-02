@@ -1,16 +1,15 @@
-package nl.joukewitteveen.providers;
+package nl.joukewitteveen.provider;
 
 import java.util.Enumeration;
 
 import javax.microedition.lcdui.*;
-import javax.microedition.location.LocationException;
 
 import nl.joukewitteveen.util.*;
 import nl.joukewitteveen.trainer.*;
-import nl.joukewitteveen.providers.movement.*;
-import nl.joukewitteveen.Provider;
+import nl.joukewitteveen.logger.GPX;
+import nl.joukewitteveen.sensor.Position;
 
-public class Speed extends Provider implements MovementHandler, CommandListener {
+public class Speed extends Provider implements Position.MovementHandler, CommandListener {
 	private static final int MS = 0, KT = 1, KMH = 2, MINKM = 3;
 	private static final float[] factors = { 1, 3.6f / 1.852f, 3.6f, 6 / 100f };
 	private int unit;
@@ -96,7 +95,7 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 		region.writeText("-", false);
 		try {
 			fresh = Position.initialize();
-		} catch(LocationException e) {
+		} catch(Exception e) {
 			region.writeText("NA");
 			return;
 		}
@@ -109,8 +108,8 @@ public class Speed extends Provider implements MovementHandler, CommandListener 
 
 	public void commandAction(Command command, Displayable displayable) {
 		if(command == Training.nextEpochCommand) {
-			Position.removeHandler(this);
 			parent.removeCommandListener(this);
+			Position.removeHandler(this);
 		}
 	}
 }

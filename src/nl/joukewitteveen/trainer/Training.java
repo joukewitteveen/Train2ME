@@ -5,8 +5,7 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.*;
 
-import nl.joukewitteveen.Provider;
-import nl.joukewitteveen.providers.*;
+import nl.joukewitteveen.provider.*;
 import nl.joukewitteveen.util.*;
 
 public class Training implements CommandListener {
@@ -44,6 +43,8 @@ public class Training implements CommandListener {
 					providers[i] = new Speed(this, regions[i], specification);
 				} else if(provider.equals("Text")) {
 					providers[i] = new Text(this, regions[i], specification);
+				} else if(provider.equals("Time")) {
+					providers[i] = new Time(this, regions[i], specification);
 				} else if(provider.equals("Timer")) {
 					providers[i] = new Timer(this, regions[i], specification);
 				} else if(provider.equals("Wait")) {

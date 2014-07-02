@@ -48,11 +48,12 @@ are:
  -  Speed [.][m/s* | km/h | kt | min/km] [<minimum>] [<maximum>]
     A '.' in front of the unit prevents the unit from being shown.
  -  Text [<text>]
-    When no text is provided, the current time is shown.
+    When no text is provided, the contents of the region from the
+    previous epoch will be retained.
+ -  Time
  -  Timer [.][s* | min | h] [<time>]
     Similar to Distance.
  -  Wait [<text>]
     Similar to Text, but a Continue button is added to the interface,
     which triggers the start of the next epoch.
 Default parameter values are marked with a *.
-

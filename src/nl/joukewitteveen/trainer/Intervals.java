@@ -93,14 +93,14 @@ public class Intervals implements ItemStateListener, CommandListener {
 			writer.println("Text\tkm/h");
 			writer.println("Text\t");
 			writer.println("Text\t");
-			writer.println("Text");
+			writer.println("Time");
 			writer.println("Text\t");
 			writer.println("Wait\tPress Continue");
 			writer.println("Speed\t.km/h");
 			writer.println("Text\tkm/h");
 			writer.println("Timer\t.s\t10");
 			writer.println("Text\ts");
-			writer.println("Text");
+			writer.println("Time");
 			writer.println("Distance\tkm\t0");
 			writer.println("Timer\t.h\t0");
 			for(int i = 1; i + 3 < editor.size(); i += 2) {
@@ -120,7 +120,7 @@ public class Intervals implements ItemStateListener, CommandListener {
 					break;
 				}
 				writer.println("Text\t" + units[selected]);
-				writer.println("Text");
+				writer.println("Time");
 				writer.println("Distance\tkm");
 				writer.println("Timer\t.h");
 			}
@@ -128,7 +128,7 @@ public class Intervals implements ItemStateListener, CommandListener {
 			writer.println("Text\tkm/h");
 			writer.println("Text\tdone");
 			writer.println("Text\t");
-			writer.println("Text");
+			writer.println("Time");
 			writer.println("Distance\tkm");
 			writer.println("Timer\t.h");
 			writer.close();

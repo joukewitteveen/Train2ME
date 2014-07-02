@@ -8,11 +8,12 @@ public class AppLog implements CommandListener {
 	private static String[] messages = new String[lines];
 	private final DisplayManager displayManager;
 
-	public static void log(String message) {
+	public static synchronized void log(String message) {
 		System.out.println(message);
 		messages[head] = message;
-		if(++head >= lines)
+		if(++head >= lines) {
 			head -= lines;
+		}
 	}
 
 	public AppLog(DisplayManager displayManager) {
@@ -24,8 +25,9 @@ public class AppLog implements CommandListener {
 		String message;
 		for(int i = 1; i <= lines; i++) {
 			message = messages[(lines + head - i) % lines];
-			if(message == null)
+			if(message == null) {
 				continue;
+			}
 			try {
 				text.insert(message + "\n", -1);
 			} catch(IllegalArgumentException e) {

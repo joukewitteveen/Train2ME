@@ -7,13 +7,13 @@
 
 Speed	.km/h
 Text	km/h
-Text
+Time
 Text	
 Wait	Press Continue
 
 // GPX logging starts here
 Speed	.min/km
 Text	min/km
-Text
+Time
 Distance	km	0
 Timer	.h	0

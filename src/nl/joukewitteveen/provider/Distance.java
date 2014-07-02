@@ -1,16 +1,15 @@
-package nl.joukewitteveen.providers;
+package nl.joukewitteveen.provider;
 
 import java.util.Enumeration;
 
 import javax.microedition.lcdui.*;
-import javax.microedition.location.LocationException;
 
 import nl.joukewitteveen.util.*;
 import nl.joukewitteveen.trainer.*;
-import nl.joukewitteveen.providers.movement.*;
-import nl.joukewitteveen.Provider;
+import nl.joukewitteveen.logger.GPX;
+import nl.joukewitteveen.sensor.Position;
 
-public class Distance extends Provider implements MovementHandler, CommandListener {
+public class Distance extends Provider implements Position.MovementHandler, CommandListener {
 	private static final int M = 1, KM = 1000, NM = 1852;
 	private static float start = 0;
 	private float pause = 0, stop;
@@ -84,7 +83,7 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 		region.writeText("-", false);
 		try {
 			fresh = Position.initialize();
-		} catch(LocationException e) {
+		} catch(Exception e) {
 			region.writeText("NA");
 			return;
 		}
@@ -106,8 +105,8 @@ public class Distance extends Provider implements MovementHandler, CommandListen
 			}
 			Position.addHandler(this);
 		} else if(command == Training.nextEpochCommand) {
-			Position.removeHandler(this);
 			parent.removeCommandListener(this);
+			Position.removeHandler(this);
 		}
 	}
 }

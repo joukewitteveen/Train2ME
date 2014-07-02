@@ -1,11 +1,10 @@
-package nl.joukewitteveen.providers;
+package nl.joukewitteveen.provider;
 
 import java.util.Enumeration;
 import java.util.TimerTask;
 
 import javax.microedition.lcdui.*;
 
-import nl.joukewitteveen.Provider;
 import nl.joukewitteveen.trainer.*;
 import nl.joukewitteveen.util.*;
 
